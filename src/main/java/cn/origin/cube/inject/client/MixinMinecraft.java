@@ -32,9 +32,6 @@ public class MixinMinecraft {
         MinecraftForge.EVENT_BUS.post(closeEvent);
         DisplayGuiScreenEvent.Displayed displayEvent = new DisplayGuiScreenEvent.Displayed(guiScreenIn);
         MinecraftForge.EVENT_BUS.post(displayEvent);
-        if (closeEvent.isCanceled() || displayEvent.isCanceled()) {
-            info.cancel();
-        }
     }
 
     public void saveNekoConfiguration() {

@@ -10,11 +10,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @ModuleInfo(name = "AutoRespawn", descriptions = "Anti Death Screen", category = Category.WORLD)
 public class AutoRespawn extends Module {
 
-    @SubscribeEvent
-    public void onDisplayGui(DisplayGuiScreenEvent event){
-        if (event.getScreen() instanceof GuiGameOver){
-            mc.displayGuiScreen(null);
-            mc.player.respawnPlayer();
+    @Override
+    public void onUpdate() {
+        if (AutoRespawn.mc.currentScreen instanceof GuiGameOver && AutoRespawn.mc.player.getHealth() >= 0.0f) {
+            AutoRespawn.mc.player.respawnPlayer();
+            AutoRespawn.mc.displayGuiScreen(null);
         }
     }
 }
