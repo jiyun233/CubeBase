@@ -61,7 +61,7 @@ class ModuleButton(width: Float, height: Float, panel: CategoryPanel, val father
     }
 
     override fun drawButton(x: Float, y: Float, mouseX: Int, mouseY: Int) {
-        if (father.isHud) {
+        if (father.isHud && father.isEnabled) {
             this.solveHUDPos(mouseX, mouseY)
             Cube.fontManager.CustomFont.drawString(
                 (father.name + " X:" + father.x).toString() + " Y:" + father.y,
