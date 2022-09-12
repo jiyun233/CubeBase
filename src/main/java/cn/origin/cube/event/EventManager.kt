@@ -2,7 +2,6 @@ package cn.origin.cube.event
 
 import cn.origin.cube.Cube
 import cn.origin.cube.event.events.world.Render3DEvent
-import cn.origin.cube.module.modules.client.ClickGui
 import cn.origin.cube.utils.Utils
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
@@ -28,7 +27,7 @@ class EventManager {
     @SubscribeEvent
     fun onKeyInput(event: InputEvent.KeyInputEvent) {
         if (event.isCanceled || !Keyboard.getEventKeyState() || Keyboard.getEventKey() <= 0) return
-        for (module in Cube.moduleManager!!.moduleList) {
+        for (module in Cube.moduleManager!!.allModuleList) {
             if (module.keyBind.value.keyCode <= 0) continue
             if (Keyboard.isKeyDown(module.keyBind.value.keyCode)) module.toggle()
         }

@@ -18,9 +18,9 @@ import cn.origin.cube.module.modules.world.AutoRespawn
 import cn.origin.cube.module.modules.world.FakePlayer
 
 class ModuleManager {
-    var moduleList = ArrayList<AbstractModule>()
-    var functionList = ArrayList<AbstractModule>()
-    var hudList = ArrayList<AbstractModule>()
+    var allModuleList = ArrayList<AbstractModule>()
+    var moduleList = ArrayList<Module>()
+    var hudList = ArrayList<HudModule>()
 
     init {
         //Client
@@ -55,20 +55,20 @@ class ModuleManager {
     }
 
     private fun registerModule(module: AbstractModule) {
-        if (!moduleList.contains(module)) moduleList.add(module)
+        if (!allModuleList.contains(module)) allModuleList.add(module)
         if (module.isHud) {
-            if (!hudList.contains(module)) hudList.add(module)
-        } else if (!functionList.contains(module)) {
-            functionList.add(module)
+            if (!hudList.contains(module)) hudList.add(module as HudModule)
+        } else if (!moduleList.contains(module)) {
+            moduleList.add(module as Module)
         }
     }
 
     fun getModulesByCategory(category: Category): List<AbstractModule> {
-        return moduleList.filter { it.category == category }
+        return allModuleList.filter { it.category == category }
     }
 
     fun getModuleByClass(clazz: Class<*>): AbstractModule? {
-        for (abstractModule in moduleList) {
+        for (abstractModule in allModuleList) {
             if (abstractModule::class.java == clazz) return abstractModule
         }
         return null
@@ -76,29 +76,29 @@ class ModuleManager {
 
 
     fun getModuleByName(name: String): AbstractModule? {
-        for (abstractModule in moduleList) {
+        for (abstractModule in allModuleList) {
             if (abstractModule.name.lowercase() == name.lowercase()) return abstractModule
         }
         return null
     }
 
     fun onUpdate() {
-        moduleList.filter { it.isEnabled }.forEach { it.onUpdate() }
+        allModuleList.filter { it.isEnabled }.forEach { it.onUpdate() }
     }
 
     fun onLogin() {
-        moduleList.filter { it.isEnabled }.forEach { it.onLogin() }
+        allModuleList.filter { it.isEnabled }.forEach { it.onLogin() }
     }
 
     fun onLogout() {
-        moduleList.filter { it.isEnabled }.forEach { it.onLogout() }
+        allModuleList.filter { it.isEnabled }.forEach { it.onLogout() }
     }
 
     fun onRender3D(event: Render3DEvent) {
-        moduleList.filter { it.isEnabled }.forEach { it.onRender3D(event) }
+        allModuleList.filter { it.isEnabled }.forEach { it.onRender3D(event) }
     }
 
     fun onRender2D() {
-        moduleList.filter { it.isEnabled }.forEach { it.onRender2D() }
+        allModuleList.filter { it.isEnabled }.forEach { it.onRender2D() }
     }
 }

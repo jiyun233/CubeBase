@@ -25,7 +25,7 @@ class ConfigManager {
         if (!path.exists()) {
             path.mkdirs()
         }
-        for (module in Cube.moduleManager!!.moduleList) {
+        for (module in Cube.moduleManager!!.allModuleList) {
             val modulePath = getModulePath(module)
             if (!modulePath.exists()) {
                 saveModuleConfig(module)
@@ -232,14 +232,14 @@ class ConfigManager {
     }
 
     private fun saveAllModules() {
-        for (module in Cube.moduleManager!!.moduleList) {
+        for (module in Cube.moduleManager!!.allModuleList) {
             saveModuleConfig(module)
         }
     }
 
 
     private fun loadAllModules() {
-        for (module in Cube.moduleManager!!.moduleList) {
+        for (module in Cube.moduleManager!!.allModuleList) {
             loadModule(module)
         }
     }

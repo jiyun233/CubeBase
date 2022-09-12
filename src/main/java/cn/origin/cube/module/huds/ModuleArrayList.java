@@ -20,8 +20,7 @@ public class ModuleArrayList extends HudModule {
         count = 0;
         Cube.moduleManager.getModuleList().stream()
                 .filter(AbstractModule::isEnabled)
-                .filter(module -> !module.category.isHud)
-                .filter(module -> ((Module) module).visible.getValue())
+                .filter(module -> module.visible.getValue())
                 .sorted(Comparator.comparing(module -> Cube.fontManager.CustomFont.getStringWidth(module.getFullHud())
                         * (sortSetting.getValue().equals(sortMode.Bottom) ? 1 : -1)))
                 .forEach(module -> {
@@ -42,18 +41,15 @@ public class ModuleArrayList extends HudModule {
                 });
         width = Cube.moduleManager.getModuleList().stream()
                 .filter(AbstractModule::isEnabled)
-                .filter(module -> !module.category.isHud)
-                .noneMatch(module -> ((Module) module).visible.getValue()) ? 20 :
+                .noneMatch(module -> module.visible.getValue()) ? 20 :
                 Cube.fontManager.CustomFont.getStringWidth(Cube.moduleManager.getModuleList()
                         .stream().filter(AbstractModule::isEnabled)
-                        .filter(module -> !module.category.isHud)
-                        .filter(module -> ((Module) module).visible.getValue())
+                        .filter(module -> module.visible.getValue())
                         .sorted(Comparator.comparing(module -> Cube.fontManager.CustomFont.getStringWidth(module.getFullHud()) * (-1)))
                         .collect(Collectors.toList()).get(0).getFullHud());
         height = ((Cube.fontManager.CustomFont.getHeight() + 1) *
                 (int) Cube.moduleManager.getModuleList().stream()
-                        .filter(AbstractModule::isEnabled)
-                        .filter(module -> !module.category.isHud).count());
+                        .filter(AbstractModule::isEnabled).count());
     }
 
     enum alignMode {
