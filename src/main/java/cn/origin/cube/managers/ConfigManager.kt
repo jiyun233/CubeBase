@@ -157,7 +157,8 @@ class ConfigManager {
             module.width = moduleJson.get("HudWidth").asFloat
             module.height = moduleJson.get("HudHeight").asFloat
         }
-        val settingsJson = moduleJson.get("Settings").asJsonObject
+        val element = moduleJson.get("Settings") ?: return
+        val settingsJson = element.asJsonObject
         if (settingsJson != null) {
             for (setting in module.settingList) {
                 setSetting(setting, settingsJson)
